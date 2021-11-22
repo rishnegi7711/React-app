@@ -36,24 +36,32 @@ const Login = () => {
 
         if(enteredEmail.trim().length==0 || !enteredEmail.includes('@')){
             setIsEmailError(true);
+        } else {
+            setIsEmailError(false);
         }
     }
 
     const validateUsernameHandler = () => {
-        if(enteredUsername.trim().length==0){
+        if(enteredUsername.trim().length==0 || enteredUsername.trim().length<6){
             setIsUsernameError(true)
+        } else {
+            setIsUsernameError(false);
         }
     }
 
     const validatePasswordMatchHandler = () => {
         if(enteredPassword1 != enteredPassword2){
             setIsPassword2Error(true);
+        } else {
+            setIsPassword2Error(false)
         }
     }
     
     const validatePassword1Handler= () => {
         if(enteredPassword1.trim().length==0){
             setIsPassword1Error(true);
+        } else {
+            setIsPassword1Error(false)
         }
     }
     const validatePassword2Handler= () => {
