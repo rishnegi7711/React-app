@@ -117,7 +117,7 @@ const Login = () => {
             onBlur={validatePasswordMatchHandler}
 
         />
-        <Button variant="contained" className='button'>Submit</Button>
+        <Button variant="contained" className="button" size="medium">Submit</Button>
 
 
     </Card>
