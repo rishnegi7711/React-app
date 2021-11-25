@@ -35,25 +35,21 @@ const Login = () => {
     }
 
     return (
-        <Card className="signup">
+        <Card className="login">
             <h1>Login</h1>
             <TextField
-                error
-                id="outlined-error-helper-text"
+                error={isUsernameError}
                 label="Username"
-                defaultValue="Username"
                 value={enteredUsername}
-                helperText={isUsernameError ? 'Incorrect Username.' : 'Please enter Username'}
+                helperText={isUsernameError ? "Incorrect Username." : "Please enter Username"}
                 onChange={usernameChangeHandler}
                 onBlur={validateUsernameHandler}
             />
             <TextField
-                error
-                id="outlined-error-helper-text"
+                error={isPasswordError}
                 label="Password"
-                defaultValue="Password"
                 value={enteredPassword}
-                helperText={isPasswordError ? 'Incorrect password.' : 'Please enter Password'}
+                helperText={isPasswordError ? "Incorrect password." : "Please enter Password"}
                 type="password"
                 onChange={passwordChangeHandler}
                 onBlur={validatePasswordHandler}
