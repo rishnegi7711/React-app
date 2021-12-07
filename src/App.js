@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { BrowserRouter as Router } from 'react-router-dom';
+import BasePage from './Components/BasePage';
 
 import Routes from './Components/Routes';
 
@@ -8,10 +9,13 @@ import Routes from './Components/Routes';
 const App = () => {
 
 
-    return (<Router>
-        <Routes />
+    return (<React.Fragment>
+        {/* <Router>
+            <Routes />
 
-    </Router>
+        </Router> */}
+        <BasePage />
+    </React.Fragment>
 
     )
 

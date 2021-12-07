@@ -18,18 +18,22 @@ const Signup = () => {
 
     const usernameChangehandler = (event) => {
         setEnteredUsername(event.target.value);
+        setIsUsernameError(false);
     }
 
     const password1ChangeHandler = (event) => {
         setEnteredPassword1(event.target.value)
+        setIsPassword1Error(false);
     }
 
     const password2ChangeHandler = (event) => {
         setEnteredPassword2(event.target.value)
+        setIsPassword2Error(false);
     }
 
     const emailChangeHandler = (event) => {
         setEnteredEmail(event.target.value)
+        setIsEmailError(false);
     }
 
     const validateEmailHandler = () => {

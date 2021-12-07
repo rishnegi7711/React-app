@@ -12,10 +12,12 @@ const Login = () => {
 
     const usernameChangeHandler = (event) => {
         setEnteredUsername(event.target.value);
+        setIsUsernameError(false);
     };
 
     const passwordChangeHandler = (event) => {
         setEnteredPassword(event.target.value);
+        setIsPasswordError(false);
     };
 
     const validatePasswordHandler = () => {
