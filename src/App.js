@@ -1,33 +1,17 @@
-import React, { useState } from 'react'
-import Login from './Components/Login';
-import Signup from './Components/Signup';
-import Switch from '@mui/material/Switch';
-import './App.scss';
+import React from 'react'
+
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import Routes from './Components/Routes';
 
 
 const App = () => {
 
 
-    const [checked, setChecked] = useState(false);
+    return (<Router>
+        <Routes />
 
-
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-    };
-
-    return (<React.Fragment>
-        {checked && <Signup />}
-        {!checked && <Login />}
-        <h3>Login</h3>
-        <Switch
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ 'aria-label': 'controlled' }}
-        />
-        <h3>Signup</h3>
-
-
-    </React.Fragment>
+    </Router>
 
     )
 
