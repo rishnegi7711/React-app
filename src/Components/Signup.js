@@ -11,6 +11,7 @@ const Signup = () => {
     const [isPassword1Error, setIsPassword1Error] = useState(false);
     const [isPassword2Error, setIsPassword2Error] = useState(false);
     const [isEmailError, setIsEmailError] = useState(false);
+    const [formValidity, setFormValidity] = useState(false);
     const [enteredPassword1, setEnteredPassword1] = useState('');
     const [enteredPassword2, setEnteredPassword2] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
@@ -56,11 +57,7 @@ const Signup = () => {
     }
 
     const validatePasswordMatchHandler = () => {
-        if (enteredPassword1 !== enteredPassword2) {
-            setIsPassword2Error(true);
-        } else {
-            setIsPassword2Error(false)
-        }
+        setIsPassword2Error(enteredPassword1 !== enteredPassword2)
     }
 
     const validatePassword1Handler = () => {
@@ -70,18 +67,23 @@ const Signup = () => {
             setIsPassword1Error(false)
         }
     }
-    // const validatePassword2Handler = () => {
-    //     if (enteredPassword2.trim().length == 0) {
-    //         setIsPassword2Error(true);
-    //     }
-    // }
+
+    const formSubmitHandler = (event) => {
+        event.preventDefault();
+        if (isUsernameError === false && isPassword1Error === false && isPassword2Error === false && isEmailError === false) {
+            setFormValidity(true);
+        }
+        if (formValidity === true) {
+            return
+        }
+
+    }
 
 
     return <Card className='login'>
         <h1>Sign Up</h1>
         <TextField
             error={isUsernameError}
-            id="outlined-error-helper-text"
             label="Username"
             value={enteredUsername}
             helperText={isUsernameError ? "Incorrect entry." : "Please enter username"}
@@ -91,7 +93,6 @@ const Signup = () => {
         />
         <TextField
             error={isEmailError}
-            id="outlined-error-helper-text"
             label="Email"
             value={enteredEmail}
             helperText={isEmailError ? "Incorrect entry." : "Please enter E-mail"}
@@ -101,7 +102,6 @@ const Signup = () => {
         />
         <TextField
             error={isPassword1Error}
-            id="outlined-error-helper-text"
             label="Password"
             value={enteredPassword1}
             helperText={isPassword1Error ? "Incorrect entry." : "Please enter password"}
@@ -113,7 +113,6 @@ const Signup = () => {
         />
         <TextField
             error={isPassword2Error}
-            id="outlined-error-helper-text"
             label=" Confirm Password"
             value={enteredPassword2}
             helperText={isPassword2Error ? "Incorrect entry." : "Please enter password again"}
@@ -123,7 +122,7 @@ const Signup = () => {
             onBlur={validatePasswordMatchHandler}
 
         />
-        <Button variant="contained" className="button" size="medium">Submit</Button>
+        <Button variant="contained" className="button" size="medium" onClick={formSubmitHandler}>Submit</Button>
 
 
     </Card>
