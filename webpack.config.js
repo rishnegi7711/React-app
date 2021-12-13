@@ -9,7 +9,7 @@ module.exports = {
     },
     devServer: {
         port: 3300,
-        hot:true
+        hot: true
     },
     module: {
         rules: [
@@ -30,5 +30,5 @@ module.exports = {
             }
         ]
     },
-    plugins:[new webpack.HotModuleReplacementPlugin()]
+    plugins: [new webpack.HotModuleReplacementPlugin()]
 };

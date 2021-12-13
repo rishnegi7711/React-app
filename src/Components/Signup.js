@@ -11,7 +11,6 @@ const Signup = () => {
     const [isPassword1Error, setIsPassword1Error] = useState(false);
     const [isPassword2Error, setIsPassword2Error] = useState(false);
     const [isEmailError, setIsEmailError] = useState(false);
-    const [formValidity, setFormValidity] = useState(false);
     const [enteredPassword1, setEnteredPassword1] = useState('');
     const [enteredPassword2, setEnteredPassword2] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
@@ -68,16 +67,7 @@ const Signup = () => {
         }
     }
 
-    const formSubmitHandler = (event) => {
-        event.preventDefault();
-        if (isUsernameError === false && isPassword1Error === false && isPassword2Error === false && isEmailError === false) {
-            setFormValidity(true);
-        }
-        if (formValidity === true) {
-            return
-        }
 
-    }
 
 
     return <Card className='login'>
@@ -122,7 +112,7 @@ const Signup = () => {
             onBlur={validatePasswordMatchHandler}
 
         />
-        <Button variant="contained" className="button" size="medium" onClick={formSubmitHandler}>Submit</Button>
+        <Button variant="contained" className="button" size="medium">Submit</Button>
 
 
     </Card>

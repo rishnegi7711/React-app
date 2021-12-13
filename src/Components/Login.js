@@ -7,6 +7,7 @@ import './Login.scss';
 const Login = () => {
     const [isUsernameError, setIsUsernameError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
+    const [formValidity, setFormValidity] = useState(false);
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
@@ -36,6 +37,17 @@ const Login = () => {
         }
     }
 
+    const formSubmitHandler = (event) => {
+        event.preventDefault();
+        if (isUsernameError === false && isPasswordError === false) {
+            setFormValidity(true);
+        }
+        if (formValidity === true) {
+            return //will integrate api later in this
+        }
+
+    }
+
     return (
         <Card className="login">
             <h1>Login</h1>
@@ -56,7 +68,7 @@ const Login = () => {
                 onChange={passwordChangeHandler}
                 onBlur={validatePasswordHandler}
             />
-            <Button variant="contained" className="button" size="medium">
+            <Button variant="contained" className="button" size="medium" onClick={formSubmitHandler}>
                 Log In
             </Button>
         </Card>
