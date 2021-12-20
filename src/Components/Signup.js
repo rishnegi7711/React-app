@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Card from './Card.js'
 import './Signup.scss'
+import Axios from 'axios';
 
 const Signup = () => {
 
@@ -11,10 +12,19 @@ const Signup = () => {
     const [isPassword1Error, setIsPassword1Error] = useState(false);
     const [isPassword2Error, setIsPassword2Error] = useState(false);
     const [isEmailError, setIsEmailError] = useState(false);
+    const [isFormValid, setIsFormValid] = useState(false);
     const [enteredPassword1, setEnteredPassword1] = useState('');
     const [enteredPassword2, setEnteredPassword2] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredUsername, setEnteredUsername] = useState('');
+
+    // useEffect(() => {
+    //     initialize();
+    // }, [])
+
+    // const initialize = () => {
+    //     Axios.post("http://localhost:3000/signup", {}).then(response => console.log(response)).catch(err => console.log(err.response))
+    // }
 
     const usernameChangehandler = (event) => {
         setEnteredUsername(event.target.value);
@@ -67,6 +77,29 @@ const Signup = () => {
         }
     }
 
+    const formValidator = () => {
+        if (!isEmailError && !isPassword1Error && !isPassword2Error && !isUsernameError) {
+            setIsFormValid(true);
+        }
+    }
+
+    const formSubmitHandler = (event) => {
+        event.preventDefault();
+        formValidator();
+        if (isFormValid) {
+            Axios.post("http://localhost:3000/signup", { username: enteredUsername, password: enteredPassword2, email: enteredEmail })
+                .then()
+                .catch(err => {
+                    if (err.response.status == 400) {
+                        alert("Username is already taken.");
+                    } else {
+                        alert("Signup successful")
+                    }
+                })
+        }
+
+    }
+
 
 
 
@@ -112,7 +145,7 @@ const Signup = () => {
             onBlur={validatePasswordMatchHandler}
 
         />
-        <Button variant="contained" className="button" size="medium">Submit</Button>
+        <Button variant="contained" className="button" size="medium" onClick={formSubmitHandler}>Submit</Button>
 
 
     </Card>

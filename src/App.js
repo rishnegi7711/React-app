@@ -3,18 +3,18 @@ import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
 import BasePage from './Components/BasePage';
 
-import Routes from './Components/Routes';
+import RoutePaths from './Components/RoutePaths';
 
 
 const App = () => {
 
 
     return (<React.Fragment>
-        {/* <Router>
-            <Routes />
+        <Router>
+            <RoutePaths />
 
-        </Router> */}
-        <BasePage />
+        </Router>
+        {/* <BasePage /> */}
     </React.Fragment>
 
     )

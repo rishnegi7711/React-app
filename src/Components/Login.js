@@ -3,6 +3,7 @@ import Card from './Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './Login.scss';
+import Axios from 'axios';
 
 const Login = () => {
     const [isUsernameError, setIsUsernameError] = useState(false);
@@ -39,11 +40,17 @@ const Login = () => {
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
-        if (isUsernameError === false && isPasswordError === false) {
+        if (!isUsernameError && !isPasswordError) {
             setFormValidity(true);
         }
         if (formValidity === true) {
-            return //will integrate api later in this
+            Axios.post("http://localhost:3000/login", { username: enteredUsername, password: enteredPassword })
+                .then(response => {
+                    // if (!response.ok) {
+                    console.log(response);
+                    // }
+                })
+                .catch(err => alert("Error Code:" + err.response.status + " Error: " + err.response.statusText))
         }
 
     }
