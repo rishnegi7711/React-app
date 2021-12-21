@@ -8,7 +8,6 @@ import Axios from 'axios';
 const Login = () => {
     const [isUsernameError, setIsUsernameError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
-    const [formValidity, setFormValidity] = useState(false);
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
@@ -40,17 +39,15 @@ const Login = () => {
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
+
         if (!isUsernameError && !isPasswordError) {
-            setFormValidity(true);
-        }
-        if (formValidity === true) {
             Axios.post("http://localhost:3000/login", { username: enteredUsername, password: enteredPassword })
                 .then(response => {
                     // if (!response.ok) {
                     console.log(response);
                     // }
                 })
-                .catch(err => alert("Error Code:" + err.response.status + " Error: " + err.response.statusText))
+                .catch(err => console.log("Error Code:" + err.response.status + " Error: " + err.response.statusText))
         }
 
     }

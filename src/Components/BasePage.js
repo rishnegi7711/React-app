@@ -8,25 +8,18 @@ import { useState } from "react";
 const BasePage = () => {
 
     const [checked, setChecked] = useState(false);
+    const [isLoginPageActive, setIsLoginPageActive] = useState(false);
 
-
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-    };
-
-    return (<React.Fragment>
-        {checked && <Signup />}
-        {!checked && <Login />}
-        <h3>Login</h3>
-        <Switch
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ 'aria-label': 'controlled' }}
-        />
-        <h3>Signup</h3>
-
-
-    </React.Fragment>
+    return (
+        <>
+            {checked ? <Signup /> : <Login />}
+            <h3>Login</h3>
+            <Switch
+                checked={checked}
+                onChange={e => setChecked(e.target.checked)}
+            />
+            <h3>Signup</h3>
+        </>
     )
 
 }

@@ -14,7 +14,6 @@ const App = () => {
             <RoutePaths />
 
         </Router>
-        {/* <BasePage /> */}
     </React.Fragment>
 
     )
