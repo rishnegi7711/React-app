@@ -8,6 +8,7 @@ import Axios from 'axios';
 const Login = () => {
     const [isUsernameError, setIsUsernameError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
+    const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
@@ -43,9 +44,10 @@ const Login = () => {
         if (!isUsernameError && !isPasswordError) {
             Axios.post("http://localhost:3000/login", { username: enteredUsername, password: enteredPassword })
                 .then(response => {
-                    // if (!response.ok) {
-                    console.log(response);
-                    // }
+                    if (response.status == 200) {
+                        console.log("Login successful");
+                        setIsLoginSuccessful(true);
+                    }
                 })
                 .catch(err => console.log("Error Code:" + err.response.status + " Error: " + err.response.statusText))
         }

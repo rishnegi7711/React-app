@@ -79,8 +79,8 @@ const Signup = () => {
                 .then()
                 .catch(err => {
                     if (err.response.status == 400) {
-                        console.log("Username is already taken.");
-                    } else {
+                        console.log("Signup not successful, please try again.");
+                    } else if (err.response.status == 201) {
                         console.log("Signup successful")
                     }
                 })

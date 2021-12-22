@@ -1,8 +1,5 @@
 import React from 'react'
-
 import { BrowserRouter as Router } from 'react-router-dom';
-import BasePage from './Components/BasePage';
-
 import RoutePaths from './Components/RoutePaths';
 
 
