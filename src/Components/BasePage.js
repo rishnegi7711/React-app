@@ -2,31 +2,34 @@ import React from "react";
 import Switch from '@mui/material/Switch';
 import Signup from "./Signup";
 import Login from "./Login";
+import Card from "./Card"
+import "./BasePage.scss";
 import { useState } from "react";
+
+
+
+
 
 
 const BasePage = () => {
 
-    const [checked, setChecked] = useState(false);
 
 
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-    };
+    const [isLoginPageActive, setIsLoginPageActive] = useState(false);
 
-    return (<React.Fragment>
-        {checked && <Signup />}
-        {!checked && <Login />}
-        <h3>Login</h3>
-        <Switch
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ 'aria-label': 'controlled' }}
-        />
-        <h3>Signup</h3>
+    return (
+        <Card className='basePage'>
+            {isLoginPageActive ? <Signup /> : <Login />}
+            <div className='switch'>
+                <h3>Login</h3>
+                <Switch
+                    checked={isLoginPageActive}
+                    onChange={e => setIsLoginPageActive(e.target.checked)}
+                />
+                <h3>Signup</h3>
+            </div>
 
-
-    </React.Fragment>
+        </Card>
     )
 
 }

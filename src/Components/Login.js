@@ -3,11 +3,15 @@ import Card from './Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './Login.scss';
+import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+    let navigate = useNavigate();
+
     const [isUsernameError, setIsUsernameError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
-    const [formValidity, setFormValidity] = useState(false);
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
@@ -39,11 +43,16 @@ const Login = () => {
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
-        if (isUsernameError === false && isPasswordError === false) {
-            setFormValidity(true);
-        }
-        if (formValidity === true) {
-            return //will integrate api later in this
+
+        if (!isUsernameError && !isPasswordError) {
+            Axios.post("http://localhost:3000/login", { username: enteredUsername, password: enteredPassword })
+                .then(response => {
+                    if (response.status == 200) {
+                        console.log("Login successful");
+                        navigate('/dashboard');
+                    }
+                })
+                .catch(err => console.log("Error Code:" + err.response.status + " Error: " + err.response.statusText))
         }
 
     }

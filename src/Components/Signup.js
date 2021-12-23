@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Card from './Card.js'
 import './Signup.scss'
+import Axios from 'axios';
 
 const Signup = () => {
 
@@ -15,6 +16,8 @@ const Signup = () => {
     const [enteredPassword2, setEnteredPassword2] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredUsername, setEnteredUsername] = useState('');
+
+
 
     const usernameChangehandler = (event) => {
         setEnteredUsername(event.target.value);
@@ -69,6 +72,27 @@ const Signup = () => {
 
 
 
+    const formSubmitHandler = (event) => {
+        event.preventDefault();
+        if (!isEmailError && !isPassword1Error && !isPassword2Error && !isUsernameError) {
+            Axios.post("http://localhost:3000/signup", { username: enteredUsername, password: enteredPassword2, email: enteredEmail })
+                .then(response => {
+                    if (response.status == 201) {
+                        console.log('signup successful');
+                    }
+                })
+                .catch(err => {
+                    console.log("Error  code: " + err.status + " Error Message: " + err.message)
+                    if (err.response.status == 400) {
+                        console.log("Signup not successful, please try again.");
+                    }
+                })
+        }
+
+    }
+
+
+
 
     return <Card className='login'>
         <h1>Sign Up</h1>
@@ -112,7 +136,7 @@ const Signup = () => {
             onBlur={validatePasswordMatchHandler}
 
         />
-        <Button variant="contained" className="button" size="medium">Submit</Button>
+        <Button variant="contained" className="button" size="medium" onClick={formSubmitHandler}>Submit</Button>
 
 
     </Card>
