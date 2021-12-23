@@ -76,12 +76,15 @@ const Signup = () => {
         event.preventDefault();
         if (!isEmailError && !isPassword1Error && !isPassword2Error && !isUsernameError) {
             Axios.post("http://localhost:3000/signup", { username: enteredUsername, password: enteredPassword2, email: enteredEmail })
-                .then()
+                .then(response => {
+                    if (response.status == 201) {
+                        console.log('signup successful');
+                    }
+                })
                 .catch(err => {
+                    console.log("Error  code: " + err.status + " Error Message: " + err.message)
                     if (err.response.status == 400) {
                         console.log("Signup not successful, please try again.");
-                    } else if (err.response.status == 201) {
-                        console.log("Signup successful")
                     }
                 })
         }

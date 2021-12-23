@@ -4,11 +4,14 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './Login.scss';
 import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+    let navigate = useNavigate();
+
     const [isUsernameError, setIsUsernameError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
-    const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
@@ -46,7 +49,7 @@ const Login = () => {
                 .then(response => {
                     if (response.status == 200) {
                         console.log("Login successful");
-                        setIsLoginSuccessful(true);
+                        navigate('/dashboard');
                     }
                 })
                 .catch(err => console.log("Error Code:" + err.response.status + " Error: " + err.response.statusText))
