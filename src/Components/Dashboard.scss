@@ -1,5 +1,10 @@
 .dashboard {
-  width: 500px;
+  width: 800px;
   color: beige;
-  height: 500px;
+  height: 800px;
+  display: flex;
+}
+
+.drawer {
+  width: 25%;
 }
