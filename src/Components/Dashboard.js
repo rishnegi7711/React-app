@@ -11,40 +11,38 @@ import './DashBoard.scss'
 
 const Dashboard = () => {
     return (
-        <Box>
-            <Box>
-                <AppBar position="static" sx={{ width: 1 }}>
-                    <Toolbar>
-                        <Typography variant="h5" component="div">
-                            <Box sx={{
-                                textAlign: 'center',
-                                fontWeight: 'light'
-                            }}>
-                                Dashboard
-                            </Box>
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-
-            <Box>
-                <Drawer
-                    sx={{
+        <>
+            <AppBar position="fixed" sx={{
+                width: 1,
+                zIndex: 10000
+            }}>
+                <Toolbar>
+                    <Typography variant="h5" component="div">
+                        <Box sx={{
+                            textAlign: 'center',
+                            fontWeight: 'light'
+                        }}>
+                            Dashboard
+                        </Box>
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                sx={{
+                    width: 240,
+                    '& .MuiDrawer-paper': {
+                        marginTop: '64px',
                         width: 240,
+                        boxSizing: 'border-box',
+                    },
+                }}
+                variant="permanent"
+                anchor="left"
+            >
+                <Typography variant='h5'>Notes</Typography>
+            </Drawer>
 
-                        '& .MuiDrawer-paper': {
-                            width: 240,
-                            boxSizing: 'border-box',
-                        },
-                    }}
-                    variant="permanent"
-                    anchor="left"
-                >
-                    <Typography variant='h5'>Notes</Typography>
-                </Drawer>
-            </Box>
-
-        </Box>
+        </>
 
     )
     // return (<div >
