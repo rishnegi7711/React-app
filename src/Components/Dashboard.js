@@ -5,11 +5,26 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import './DashBoard.scss'
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { SubjectOutlined } from '@mui/icons-material';
+import { AddCircleOutlineOutlined } from '@material-ui/icons';
 
 
 
 
 const Dashboard = () => {
+    const menuItems = [
+        {
+            text: 'All',
+            icon: <SubjectOutlined color='primary' />
+            // path: '/dashboard/all'
+        },
+        {
+            text: 'Create',
+            icon: <AddCircleOutlineOutlined color='primary' />
+            // path: '/dashboard/create'
+        },
+    ];
     return (
         <>
             <AppBar position="fixed" sx={{
@@ -40,6 +55,14 @@ const Dashboard = () => {
                 anchor="left"
             >
                 <Typography variant='h5'>Notes</Typography>
+                <List>
+                    {menuItems.map(item => (
+                        <ListItem key={item.text}>
+                            <ListItemIcon>{item.icon}</ListItemIcon>
+                            <ListItemText>{item.text}</ListItemText>
+                        </ListItem>
+                    ))}
+                </List>
             </Drawer>
 
         </>
