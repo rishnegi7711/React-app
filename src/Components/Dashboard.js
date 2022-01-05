@@ -8,8 +8,8 @@ import './DashBoard.scss'
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { SubjectOutlined } from '@mui/icons-material';
 import { AddCircleOutlineOutlined } from '@material-ui/icons';
-import { useNavigate } from 'react-router-dom';
-
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import Create from './Create';
 
 
 
@@ -69,6 +69,12 @@ const Dashboard = () => {
                     ))}
                 </List>
             </Drawer>
+            <div>
+                <Routes>
+                    <Route path="/dashboard/all" element={<main><h2>Working space will be added here</h2></main>} />
+                    <Route path="/dashboard/create" element={<Create />} />
+                </Routes>
+            </div>
 
         </>
 

@@ -77,7 +77,12 @@ const Login = () => {
                 onChange={passwordChangeHandler}
                 onBlur={validatePasswordHandler}
             />
-            <Button variant="contained" className="button" size="medium" onClick={formSubmitHandler}>
+            <Button
+                variant="contained"
+                className="button"
+                size="medium"
+                sx={{ display: 'flex' }}
+                onClick={formSubmitHandler}>
                 Log In
             </Button>
         </Card>

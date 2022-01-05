@@ -47,7 +47,7 @@ const Create = () => {
     return (
         <Card className='create'>
             <Typography variant='h5'>Create Note</Typography>
-            <form>
+            <form className='form'>
                 <TextField
                     label='Note Title'
                     value={title}
