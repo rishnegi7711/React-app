@@ -8,6 +8,7 @@ import './DashBoard.scss'
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { SubjectOutlined } from '@mui/icons-material';
 import { AddCircleOutlineOutlined } from '@material-ui/icons';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -16,15 +17,16 @@ const Dashboard = () => {
     const menuItems = [
         {
             text: 'All',
-            icon: <SubjectOutlined color='primary' />
-            // path: '/dashboard/all'
+            icon: <SubjectOutlined color='primary' />,
+            path: '/dashboard/all',
         },
         {
             text: 'Create',
-            icon: <AddCircleOutlineOutlined color='primary' />
-            // path: '/dashboard/create'
+            icon: <AddCircleOutlineOutlined color='primary' />,
+            path: '/dashboard/create',
         },
     ];
+    let navigate = useNavigate();
     return (
         <>
             <AppBar position="fixed" sx={{
@@ -57,7 +59,10 @@ const Dashboard = () => {
                 <Typography variant='h5'>Notes</Typography>
                 <List>
                     {menuItems.map(item => (
-                        <ListItem key={item.text}>
+                        <ListItem
+                            key={item.text}
+                            button
+                            onClick={navigate(item.path)}>
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText>{item.text}</ListItemText>
                         </ListItem>
