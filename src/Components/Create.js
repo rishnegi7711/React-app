@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import Card from './Card';
 import { Button, TextField, Typography } from "@mui/material";
+import Axios from 'axios';
+import Card from './Card';
 import './Create.scss';
+
 
 
 const Create = () => {
@@ -36,10 +38,27 @@ const Create = () => {
         }
     }
 
+    const dateHandler = () => {
+        const d = new Date();
+        return (d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds());
+    }
+    const idHandler = () => {
+        return (Math.floor(Math.random() * 1000));
+    }
+
     const formSubmitHandler = (event) => {
         event.preventDefault()
-        if (isTitleError == '') {
-            setIsTitleError(true)
+        var currentDate = dateHandler();
+        var currentId = idHandler();
+        if (!isTitleError && !isDetailError) {
+            Axios.post("http://localhost:3000/article", { id: currentId, title: title, description: detail, date: currentDate })
+                .then(response => {
+                    console.log(response.status + ' ' + response.message)
+                }).catch(err => {
+                    console.log("Error  code: " + err.status + " Error Message: " + err.message)
+                })
+        } else {
+            console.log('something went wrong')
         }
     }
 
@@ -76,7 +95,7 @@ const Create = () => {
                     error={isDetailError}
                 >
                 </TextField>
-                <Button variant='contained' sx={{ margin: 'auto' }} onSubmit={formSubmitHandler}>Submit</Button>
+                <Button variant='contained' sx={{ margin: 'auto' }} onClick={formSubmitHandler}>Submit</Button>
             </form>
 
         </Card>
