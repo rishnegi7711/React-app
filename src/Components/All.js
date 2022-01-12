@@ -39,36 +39,23 @@ const All = () => {
     return (
         <Card className='all'>
             <Grid container spacing={2}>
-                {notes.map(note => {
+                {notes.map(note => (
                     <Grid item
-                        id={note.id}
+                        key={note.id}
                         xs={4}
                         sx={{
                             margin: 2,
                             textAlign: 'center'
                         }}>
                         <Paper elevation={4}>
-                            <h5>{note.title}</h5>
+                            <h3>{note.title}</h3>
                             <p>
                                 {note.description}
                             </p>
                             <DeleteOutlined />
                         </Paper>
                     </Grid>
-                })}
-                {/* <Grid item xs={4} sx={{
-                    margin: 2,
-                    textAlign: 'center'
-                }}>
-                    <Paper elevation={4}>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-                        <DeleteOutlined />
-                    </Paper>
-                </Grid> */}
-
-
+                ))}
             </Grid>
         </Card>
     )
