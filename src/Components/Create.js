@@ -3,10 +3,12 @@ import { Button, TextField, Typography } from "@mui/material";
 import Axios from 'axios';
 import Card from './Card';
 import './Create.scss';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Create = () => {
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [detail, setDetail] = useState('');
     const [isTitleError, setIsTitleError] = useState(false)
@@ -54,6 +56,10 @@ const Create = () => {
             Axios.post("http://localhost:3000/article", { id: currentId, title: title, description: detail, date: currentDate })
                 .then(response => {
                     console.log(response.status + ' ' + response.message)
+
+                    if (response.status === 200) {
+                        navigate('/dashboard/all');
+                    }
                 }).catch(err => {
                     console.log("Error  code: " + err.status + " Error Message: " + err.message)
                 })
