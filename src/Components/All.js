@@ -80,12 +80,13 @@ const All = () => {
   const callEditNoteApi = () => {
     axios
       .patch(`http://localhost:3000/article/${activeEditNoteId}`, {
-        id: activeEditTitle,
+        title: activeEditTitle,
         description: activeEditDescription,
       })
       .then((response) => {
         if (response.status === 200) {
           console.log('Edit was a success');
+          setisEditModeActive(false);
           getInitialData();
         } else {
           console.log('Failure, patch not successfull');
@@ -140,7 +141,7 @@ const All = () => {
                       <HighlightOffIcon onClick={() => editModeDeactivate(note.id)} sx={{ cursor: 'pointer' }} />
                     ) : (
                       <ModeEditIcon
-                        onClick={(() => editModeActivate(note.id), onEditButtonClick(note.title, note.description))}
+                        onClick={() => { editModeActivate(note.id); onEditButtonClick(note.title, note.description) }}
                         sx={{ cursor: 'pointer' }}
                       />
                     )}
