@@ -45,14 +45,29 @@ const Login = () => {
         event.preventDefault();
 
         if (!isUsernameError && !isPasswordError) {
-            Axios.post("http://localhost:3000/login", { username: enteredUsername, password: enteredPassword })
-                .then(response => {
-                    if (response.status == 200) {
-                        console.log("Login successful");
+            const login = async () => {
+                try {
+                    let res = await Axios.post('http://localhost:3000/login', { username: enteredUsername, password: enteredPassword });
+                    let data = res.data;
+                    console.log(data);
+                    if (data.message === 'Ok') {
+                        console.log('login successful');
                         navigate('/dashboard');
                     }
-                })
-                .catch(err => console.log("Error Code:" + err.response.status + " Error: " + err.response.statusText))
+                } catch (err) {
+                    console.log("Error Code:" + err.response.status + " Error: " + err.response.statusText)
+                }
+
+            }
+            // Axios.post("http://localhost:3000/login", { username: enteredUsername, password: enteredPassword })
+            //     .then(response => {
+            //         if (response.status == 200) {
+            //             console.log("Login successful");
+            //             navigate('/dashboard');
+            //         }
+            //     })
+            //     .catch(err => console.log("Error Code:" + err.response.status + " Error: " + err.response.statusText))
+            login();
         }
 
     }
