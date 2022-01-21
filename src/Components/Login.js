@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { callUserLoginApi } from '../Api';
+import { useNavigate } from 'react-router-dom';
 import './Login.scss';
 import Card from './Card';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -39,24 +39,17 @@ const Login = () => {
         }
     };
 
-    const formSubmitHandler = (event) => {
+    const formSubmitHandler = async (event) => {
         event.preventDefault();
+        if (isUsernameError || isPasswordError) return;
 
-        if (!isUsernameError && !isPasswordError) {
-            const apiCall = async () => {
-                try {
-                    const { status } = await callUserLoginApi(enteredUsername, enteredPassword);
-                    if (status === 200) {
-                        console.log('login successful');
-                        navigate('/dashboard');
-                    }
-                } catch (err) {
-                    console.log('Error Code:' + err.response.status + ' Error: ' + err.response.statusText);
-                }
-            };
-            apiCall();
+        const { status } = await callUserLoginApi(enteredUsername, enteredPassword);
+        if (status === 200) {
+            console.log('login successful');
+            navigate('/dashboard');
         }
     };
+
 
     return (
         <Card className="login">

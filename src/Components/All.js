@@ -9,6 +9,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import axios from 'axios';
 import Card from './Card';
 import './All.scss';
+import { callDeleteNoteApi, callEditNoteApi, callInitialDataApi } from '../Api';
 
 const All = () => {
   const [notes, setNotes] = useState([]);
@@ -51,47 +52,20 @@ const All = () => {
     setMouseEnter(false);
   };
 
-  const getInitialData = () => {
-    axios
-      .get('http://localhost:3000/articles')
-      .then((response) => {
-        var currentNotes = [...response.data.data];
-        console.log(currentNotes);
-        setNotes([...currentNotes]);
-        console.log(notes.length);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+  const getInitialData = async () => {
+    const response = await callInitialDataApi();
+    var currentNotes = [...response.data.data];
+    setNotes([...currentNotes])
+  }
+
+  const deleteNoteApi = async () => {
+    const { status } = await callDeleteNoteApi(noteId);
+    if (status === 200) getInitialData();
   };
 
-  const callDeleteNoteApi = () => {
-    axios
-      .delete(`http://localhost:3000/article/${noteId}`)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          getInitialData();
-        }
-      })
-      .catch((err) => console.log(err.message));
-  };
-
-  const callEditNoteApi = () => {
-    axios
-      .patch(`http://localhost:3000/article/${activeEditNoteId}`, {
-        title: activeEditTitle,
-        description: activeEditDescription,
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log('Edit was a success');
-          setisEditModeActive(false);
-          getInitialData();
-        } else {
-          console.log('Failure, patch not successfull');
-        }
-      });
+  const editNoteApi = async () => {
+    const { status } = await callEditNoteApi(activeEditNoteId, activeEditTitle, activeEditDescription);
+    if (status === 200) getInitialData();
   };
 
   useEffect(() => {
@@ -136,7 +110,7 @@ const All = () => {
               <div style={{ width: '100px' }}>
                 {mouseEnter && note.id === noteId && (
                   <>
-                    <DeleteOutlined onClick={callDeleteNoteApi} fontSize="medium" sx={{ cursor: 'pointer' }} />
+                    <DeleteOutlined onClick={deleteNoteApi} fontSize="medium" sx={{ cursor: 'pointer' }} />
                     {isEditModeActive ? (
                       <HighlightOffIcon onClick={() => editModeDeactivate(note.id)} sx={{ cursor: 'pointer' }} />
                     ) : (
@@ -146,7 +120,7 @@ const All = () => {
                       />
                     )}
                     {isEditModeActive && note.id === activeEditNoteId && (
-                      <CheckIcon onClick={callEditNoteApi} sx={{ cursor: 'pointer' }} />
+                      <CheckIcon onClick={editNoteApi} sx={{ cursor: 'pointer' }} />
                     )}
                   </>
                 )}
