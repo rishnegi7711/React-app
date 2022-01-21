@@ -7,4 +7,4 @@ import './App.scss';
 
 const appElement = document.getElementById('app');
 
-ReactDOM.render(<App/>,appElement);
+ReactDOM.render(<App />, appElement);
