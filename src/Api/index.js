@@ -5,6 +5,23 @@ const instance = axios.create({
     baseURL: 'http://localhost:3000'
 })
 
+
+instance.interceptors.request.use(function (config) {
+    console.log('Request sent successfully');
+    return config;
+}, function (err) {
+    console.log(err.status)
+    return Promise.reject(err);
+})
+
+instance.interceptors.response.use(function (response) {
+    console.log(response.status);
+    return response;
+}, function (err) {
+    console.log(err.message);
+    return Promise.reject(err);
+})
+
 export const callUserLoginApi = (enteredUsername, enteredPassword) => {
     return instance.post('/login', {
         username: enteredUsername,

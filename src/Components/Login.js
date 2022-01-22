@@ -45,7 +45,6 @@ const Login = () => {
 
         const { status } = await callUserLoginApi(enteredUsername, enteredPassword);
         if (status === 200) {
-            console.log('login successful');
             navigate('/dashboard');
         }
     };
