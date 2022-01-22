@@ -6,7 +6,6 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import TextField from '@mui/material/TextField';
 import CheckIcon from '@mui/icons-material/Check';
-import axios from 'axios';
 import Card from './Card';
 import './All.scss';
 import { callDeleteNoteApi, callEditNoteApi, callInitialDataApi } from '../Api';
@@ -65,7 +64,7 @@ const All = () => {
 
   const editNoteApi = async () => {
     const { status } = await callEditNoteApi(activeEditNoteId, activeEditTitle, activeEditDescription);
-    if (status === 200) getInitialData();
+    if (status === 200) getInitialData(), editModeDeactivate(activeEditNoteId);
   };
 
   useEffect(() => {

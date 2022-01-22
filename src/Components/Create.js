@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography } from "@mui/material";
-import Axios from 'axios';
 import Card from './Card';
-import './Create.scss';
 import { useNavigate } from 'react-router-dom';
+import { callCreateNoteApi } from '../Api';
+import './Create.scss';
 
 
 
@@ -48,24 +48,14 @@ const Create = () => {
         return (Math.floor(Math.random() * 1000));
     }
 
-    const formSubmitHandler = (event) => {
+    const formSubmitHandler = async (event) => {
         event.preventDefault()
         var currentDate = dateHandler();
         var currentId = idHandler();
-        if (!isTitleError && !isDetailError) {
-            Axios.post("http://localhost:3000/article", { id: currentId, title: title, description: detail, date: currentDate })
-                .then(response => {
-                    console.log(response.status + ' ' + response.message)
+        if (isTitleError || isDetailError) return;
+        const { status } = await callCreateNoteApi(currentId, title, detail, currentDate);
+        if (status === 200) navigate('/dashboard/all');
 
-                    if (response.status === 200) {
-                        navigate('/dashboard/all');
-                    }
-                }).catch(err => {
-                    console.log("Error  code: " + err.status + " Error Message: " + err.message)
-                })
-        } else {
-            console.log('something went wrong')
-        }
     }
 
 

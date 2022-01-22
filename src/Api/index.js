@@ -1,7 +1,12 @@
-import Axios from 'axios';
+import axios from 'axios';
+
+
+const instance = axios.create({
+    baseURL: 'http://localhost:3000'
+})
 
 export const callUserLoginApi = (enteredUsername, enteredPassword) => {
-    return Axios.post('http://localhost:3000/login', {
+    return instance.post('/login', {
         username: enteredUsername,
         password: enteredPassword,
     });
@@ -9,23 +14,32 @@ export const callUserLoginApi = (enteredUsername, enteredPassword) => {
 }
 
 export const callUserSignupApi = (enteredUsername, enteredPassword, enteredEmail) => {
-    return Axios.post('http://localhost:3000/signup', {
+    return instance.post('/signup', {
         username: enteredUsername,
         password: enteredPassword,
         email: enteredEmail
     });
 }
 
+export const callCreateNoteApi = (id, title, description, date,) => {
+    return instance.post('/article', {
+        id: id,
+        title: title,
+        description: description,
+        date: date
+    });
+}
+
 export const callInitialDataApi = () => {
-    return Axios.get('http://localhost:3000/articles', {})
+    return instance.get('/articles', {})
 }
 
 export const callDeleteNoteApi = (noteId) => {
-    return Axios.delete(`http://localhost:3000/article/${noteId}`)
+    return instance.delete(`/article/${noteId}`)
 }
 
 export const callEditNoteApi = (activeEditNoteId, activeEditTitle, activeEditDescription) => {
-    return Axios.patch(`http://localhost:3000/article/${activeEditNoteId}`, {
+    return instance.patch(`/article/${activeEditNoteId}`, {
         title: activeEditTitle,
         description: activeEditDescription
     })
