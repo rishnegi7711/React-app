@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import Card from './Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import './Login.scss';
-import Axios from 'axios';
+import { callUserLoginApi } from '../Api';
 import { useNavigate } from 'react-router-dom';
+import './Login.scss';
+import Card from './Card';
 
 const Login = () => {
-
-    let navigate = useNavigate();
-
+    const navigate = useNavigate();
     const [isUsernameError, setIsUsernameError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
     const [enteredUsername, setEnteredUsername] = useState('');
@@ -29,38 +27,38 @@ const Login = () => {
         if (enteredPassword.trim().length === 0) {
             setIsPasswordError(true);
         } else {
-            setIsPasswordError(false)
+            setIsPasswordError(false);
         }
-    }
+    };
 
     const validateUsernameHandler = () => {
         if (enteredUsername.trim().length === 0 || enteredUsername.trim().length < 6) {
-            setIsUsernameError(true)
+            setIsUsernameError(true);
         } else {
-            setIsUsernameError(false)
+            setIsUsernameError(false);
         }
-    }
+    };
 
-    const formSubmitHandler = (event) => {
+    const formSubmitHandler = async (event) => {
         event.preventDefault();
+        if (isUsernameError || isPasswordError) return;
 
-        if (!isUsernameError && !isPasswordError) {
-            const login = async () => {
-                try {
-                    const { status } = await Axios.post('http://localhost:3000/login', { username: enteredUsername, password: enteredPassword });
-                    if (status === 200) {
-                        console.log('login successful');
-                        navigate('/dashboard');
-                    }
-                } catch (err) {
-                    console.log("Error Code:" + err.response.status + " Error: " + err.response.statusText)
-                }
-
-            }
-            login();
+        const body = {
+            username: enteredUsername, password: enteredPassword
         }
+        // const a = {
+        //     id,
+        //     title,
+        //     description,
+        //     date
+        // }
 
-    }
+        const { status } = await callUserLoginApi(body);
+        if (status === 200) {
+            navigate('/dashboard');
+        }
+    };
+
 
     return (
         <Card className="login">
@@ -69,7 +67,7 @@ const Login = () => {
                 error={isUsernameError}
                 label="Username"
                 value={enteredUsername}
-                helperText={isUsernameError ? "Incorrect Username." : "Please enter Username"}
+                helperText={isUsernameError ? 'Incorrect Username.' : 'Please enter Username'}
                 onChange={usernameChangeHandler}
                 onBlur={validateUsernameHandler}
             />
@@ -77,12 +75,12 @@ const Login = () => {
                 error={isPasswordError}
                 label="Password"
                 value={enteredPassword}
-                helperText={isPasswordError ? "Incorrect password." : "Please enter Password"}
+                helperText={isPasswordError ? 'Incorrect password.' : 'Please enter Password'}
                 type="password"
                 onChange={passwordChangeHandler}
                 onBlur={validatePasswordHandler}
             />
-            <Button variant="contained" className="button" size="medium" onClick={formSubmitHandler}>
+            <Button variant="contained" className="button" size="medium" sx={{ display: 'flex' }} onClick={formSubmitHandler}>
                 Log In
             </Button>
         </Card>

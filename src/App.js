@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
 import RoutePaths from './Components/RoutePaths';
 
-
 const App = () => {
 
 
