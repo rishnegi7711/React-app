@@ -73,8 +73,8 @@ const Signup = () => {
     const formSubmitHandler = async (event) => {
         event.preventDefault();
         if (isEmailError || isPassword1Error || isPassword2Error || isUsernameError) return;
-
-        const { status } = await callUserSignupApi(enteredUsername, enteredPassword2, enteredEmail);
+        const body = { username: enteredUsername, password: enteredPassword2, email: enteredEmail };
+        const { status } = await callUserSignupApi(body);
         if (status === 201) {
             console.log('ok');
             setEnteredUsername('');

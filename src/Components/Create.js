@@ -53,7 +53,8 @@ const Create = () => {
         var currentDate = dateHandler();
         var currentId = idHandler();
         if (isTitleError || isDetailError) return;
-        const { status } = await callCreateNoteApi(currentId, title, detail, currentDate);
+        const body = { id: currentId, title: title, description: detail, date: currentDate }
+        const { status } = await callCreateNoteApi(body);
         if (status === 200) navigate('/dashboard/all');
 
     }

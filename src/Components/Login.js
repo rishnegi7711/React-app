@@ -43,7 +43,17 @@ const Login = () => {
         event.preventDefault();
         if (isUsernameError || isPasswordError) return;
 
-        const { status } = await callUserLoginApi(enteredUsername, enteredPassword);
+        const body = {
+            username: enteredUsername, password: enteredPassword
+        }
+        // const a = {
+        //     id,
+        //     title,
+        //     description,
+        //     date
+        // }
+
+        const { status } = await callUserLoginApi(body);
         if (status === 200) {
             navigate('/dashboard');
         }

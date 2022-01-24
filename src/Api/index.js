@@ -5,46 +5,41 @@ const instance = axios.create({
     baseURL: 'http://localhost:3000'
 })
 
-
-instance.interceptors.request.use(function (config) {
-    console.log('Request sent successfully');
+const outgoingRequestSuccessInterceptor = (config) => {
+    console.log('Request sent successfully')
     return config;
-}, function (err) {
+}
+
+const outgoingRequestFailureInterceptor = (err) => {
     console.log(err.status)
     return Promise.reject(err);
-})
+}
 
-instance.interceptors.response.use(function (response) {
-    console.log(response.status);
+const incomingResponseSuccessInterceptor = (response) => {
+    console.log(response.status)
     return response;
-}, function (err) {
+}
+
+const incomingResponseFailureInterceptor = (err) => {
     console.log(err.message);
-    return Promise.reject(err);
-})
+    return Promise.reject(err)
+}
 
-export const callUserLoginApi = (enteredUsername, enteredPassword) => {
-    return instance.post('/login', {
-        username: enteredUsername,
-        password: enteredPassword,
-    });
+instance.interceptors.request.use(outgoingRequestSuccessInterceptor, outgoingRequestFailureInterceptor)
+
+instance.interceptors.response.use(incomingResponseSuccessInterceptor, incomingResponseFailureInterceptor)
+
+export const callUserLoginApi = (body) => {
+    return instance.post('/login', body);
 
 }
 
-export const callUserSignupApi = (enteredUsername, enteredPassword, enteredEmail) => {
-    return instance.post('/signup', {
-        username: enteredUsername,
-        password: enteredPassword,
-        email: enteredEmail
-    });
+export const callUserSignupApi = (body) => {
+    return instance.post('/signup', body);
 }
 
-export const callCreateNoteApi = (id, title, description, date,) => {
-    return instance.post('/article', {
-        id: id,
-        title: title,
-        description: description,
-        date: date
-    });
+export const callCreateNoteApi = (body) => {
+    return instance.post('/article', body);
 }
 
 export const callInitialDataApi = () => {

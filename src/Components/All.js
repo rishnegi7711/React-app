@@ -24,14 +24,6 @@ const All = () => {
     setIsActiveEditDescription(description);
   };
 
-  const titleEditor = (event) => {
-    setIsActiveEditTitle(event.target.value);
-  };
-
-  const descriptionEditor = (event) => {
-    setIsActiveEditDescription(event.target.value);
-  };
-
   const editModeActivate = (id) => {
     setIsActiveEditNoteId(id);
     setisEditModeActive(true);
@@ -64,7 +56,10 @@ const All = () => {
 
   const editNoteApi = async () => {
     const { status } = await callEditNoteApi(activeEditNoteId, activeEditTitle, activeEditDescription);
-    if (status === 200) getInitialData(), editModeDeactivate(activeEditNoteId);
+    if (status === 200) {
+      getInitialData();
+      editModeDeactivate(activeEditNoteId);
+    }
   };
 
   useEffect(() => {
@@ -96,12 +91,12 @@ const All = () => {
               onMouseLeave={mouseExitHandler}
             >
               {isEditModeActive && note.id === activeEditNoteId ? (
-                <TextField value={activeEditTitle} onChange={titleEditor} />
+                <TextField value={activeEditTitle} onChange={(event) => setIsActiveEditTitle(event.target.value)} />
               ) : (
                 <h3>{note.title}</h3>
               )}
               {isEditModeActive && note.id === activeEditNoteId ? (
-                <TextField value={activeEditDescription} onChange={descriptionEditor} />
+                <TextField value={activeEditDescription} onChange={(event) => setIsActiveEditDescription(event.target.value)} />
               ) : (
                 <p>{note.description}</p>
               )}
