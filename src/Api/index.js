@@ -50,9 +50,6 @@ export const callDeleteNoteApi = (noteId) => {
     return instance.delete(`/article/${noteId}`)
 }
 
-export const callEditNoteApi = (activeEditNoteId, activeEditTitle, activeEditDescription) => {
-    return instance.patch(`/article/${activeEditNoteId}`, {
-        title: activeEditTitle,
-        description: activeEditDescription
-    })
+export const callEditNoteApi = (body) => {
+    return instance.patch(`/article/${body.id}`, body)
 }
