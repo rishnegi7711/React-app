@@ -55,7 +55,8 @@ const All = () => {
   };
 
   const editNoteApi = async () => {
-    const { status } = await callEditNoteApi(activeEditNoteId, activeEditTitle, activeEditDescription);
+    const body = { id: activeEditNoteId, title: activeEditTitle, description: activeEditDescription }
+    const { status } = await callEditNoteApi(body);
     if (status === 200) {
       getInitialData();
       editModeDeactivate(activeEditNoteId);
