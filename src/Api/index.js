@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+import store from '../redux/store';
+import { openSnackbar } from '../redux/snackbar';
 
 const instance = axios.create({
     baseURL: 'http://localhost:3000'
@@ -12,6 +13,8 @@ const outgoingRequestSuccessInterceptor = (config) => {
 
 const outgoingRequestFailureInterceptor = (err) => {
     console.log(err.status)
+    const payloadBody = { isSnackbarOpen: true, snackbarType: 'error', snackbarMessage: err.status };
+    store.dispatch(payloadBody)
     return Promise.reject(err);
 }
 
@@ -22,6 +25,8 @@ const incomingResponseSuccessInterceptor = (response) => {
 
 const incomingResponseFailureInterceptor = (err) => {
     console.log(err.message);
+    const payloadBody = { isSnackbarOpen: true, snackbarType: 'error', snackbarMessage: err.message };
+    store.dispatch(openSnackbar(payloadBody))
     return Promise.reject(err)
 }
 
