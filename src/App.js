@@ -23,7 +23,7 @@ const App = () => {
                 <RoutePaths />
             </Router>
             <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handleClose} TransitionComponent={transitionRight}>
-                <Alert onClose={handleClose} severity={snackbarType} sx={{ width: '100%' }}>
+                <Alert onClose={handleClose} severity={snackbarType} elevation={6} variant='filled' sx={{ width: '100%' }}>
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
