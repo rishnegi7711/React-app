@@ -5,6 +5,11 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import RoutePaths from './Components/RoutePaths';
 import { closeSnackbar } from './redux/snackbar';
+import { Slide } from '@mui/material';
+
+const transitionRight = (props) => {
+    return <Slide {...props} direction='down' />
+}
 
 const App = () => {
     const dispatch = useDispatch();
@@ -17,7 +22,7 @@ const App = () => {
             <Router>
                 <RoutePaths />
             </Router>
-            <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handleClose} TransitionComponent={transitionRight}>
                 <Alert onClose={handleClose} severity={snackbarType} sx={{ width: '100%' }}>
                     {snackbarMessage}
                 </Alert>
