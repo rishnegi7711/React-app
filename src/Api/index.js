@@ -8,13 +8,19 @@ const instance = axios.create({
 
 const outgoingRequestSuccessInterceptor = (config) => {
     console.log('Request sent successfully')
+    let array = ['/login', '/signup'];
+    if (!array.includes(config.url)) {
+        const token = store.getState().user.response.token
+        config.headers.Authorization = token;
+    }
+
     return config;
 }
 
 const outgoingRequestFailureInterceptor = (err) => {
     console.log(err.status)
     const payloadBody = { isSnackbarOpen: true, snackbarType: 'error', snackbarMessage: err.status };
-    store.dispatch(payloadBody)
+    store.dispatch(openSnackbar(payloadBody))
     return Promise.reject(err);
 }
 

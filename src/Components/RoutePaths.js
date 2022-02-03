@@ -4,12 +4,14 @@ import BasePage from "./BasePage";
 import Dashboard from "./Dashboard";
 import Create from "./Create";
 import All from "./All";
+import ProtectedRoute from "../hoc/ProtectedRoute";
+
+
 
 const RoutePaths = () => {
     return (
         <Routes>
-            {/* <Route path="*" element={<main><h2>There is nothing here!</h2></main>} /> */}
-            <Route path="dashboard" element={<Dashboard />}>
+            <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
                 <Route path="all" element={<All />} />
                 <Route path="create" element={<Create />} />
             </Route>

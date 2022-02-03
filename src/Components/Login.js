@@ -7,6 +7,7 @@ import './Login.scss';
 import Card from './Card';
 import { useDispatch } from 'react-redux';
 import { openSnackbar } from '../redux/snackbar';
+import { loginUser } from '../redux/user'
 
 const Login = () => {
     const navigate = useNavigate();
@@ -57,8 +58,9 @@ const Login = () => {
             username: enteredUsername, password: enteredPassword
         }
 
-        const { status } = await callUserLoginApi(body);
+        const { status, data } = await callUserLoginApi(body);
         if (status === 200) {
+            dispatch(loginUser(data.data))
             navigate('/dashboard');
         }
     };
