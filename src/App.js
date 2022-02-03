@@ -1,14 +1,33 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import RoutePaths from './Components/RoutePaths';
+import { closeSnackbar } from './redux/snackbar';
+import { Slide } from '@mui/material';
+
+const transitionRight = (props) => {
+    return <Slide {...props} direction='down' />
+}
 
 const App = () => {
+    const dispatch = useDispatch();
+    const handleClose = () => {
+        dispatch(closeSnackbar());
+    }
+    const { isSnackbarOpen, snackbarType, snackbarMessage } = useSelector((state) => state.snackbar)
     return (
-        <React.Fragment>
+        <>
             <Router>
                 <RoutePaths />
             </Router>
-        </React.Fragment>
+            <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handleClose} TransitionComponent={transitionRight}>
+                <Alert onClose={handleClose} severity={snackbarType} elevation={6} variant='filled' sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
+        </>
     );
 };
 

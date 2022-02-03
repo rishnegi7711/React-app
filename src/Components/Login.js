@@ -5,9 +5,13 @@ import { callUserLoginApi } from '../Api';
 import { useNavigate } from 'react-router-dom';
 import './Login.scss';
 import Card from './Card';
+import { useDispatch } from 'react-redux';
+import { openSnackbar } from '../redux/snackbar';
+import { loginUser } from '../redux/user'
 
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isUsernameError, setIsUsernameError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
     const [enteredUsername, setEnteredUsername] = useState('');
@@ -26,15 +30,22 @@ const Login = () => {
     const validatePasswordHandler = () => {
         if (enteredPassword.trim().length === 0) {
             setIsPasswordError(true);
+            const payloadBody = { isSnackbarOpen: true, snackbarType: 'warning', snackbarMessage: 'Please enter password' };
+            dispatch(openSnackbar(payloadBody))
         } else {
             setIsPasswordError(false);
         }
     };
 
     const validateUsernameHandler = () => {
-        if (enteredUsername.trim().length === 0 || enteredUsername.trim().length < 6) {
+        if (enteredUsername.trim().length === 0) {
             setIsUsernameError(true);
-        } else {
+            const payloadBody = { isSnackbarOpen: true, snackbarType: 'warning', snackbarMessage: 'Please enter username.' }
+            dispatch(openSnackbar(payloadBody))
+        } else if (enteredUsername.trim().length < 6) {
+            setIsUsernameError(true);
+        }
+        else {
             setIsUsernameError(false);
         }
     };
@@ -46,15 +57,10 @@ const Login = () => {
         const body = {
             username: enteredUsername, password: enteredPassword
         }
-        // const a = {
-        //     id,
-        //     title,
-        //     description,
-        //     date
-        // }
 
-        const { status } = await callUserLoginApi(body);
+        const { status, data } = await callUserLoginApi(body);
         if (status === 200) {
+            dispatch(loginUser(data.data))
             navigate('/dashboard');
         }
     };
